@@ -1,0 +1,1311 @@
+/* =========================================================
+   A. Lanchares · Taller de Arte
+   Estilo editorial minimalista: mucho blanco, serif de alto
+   contraste en versales espaciadas y microtextos en mayúscula.
+   Todo lo editable vive en :root.
+   ========================================================= */
+
+:root {
+  /* Color — papel cálido con un terracota muy pálido de acento */
+  --paper:      #f8f5f1;  /* fondo general */
+  --paper-2:    #f2e9e2;  /* bandas y paneles, terracota lavado */
+  --paper-3:    #e8dbd1;  /* bordes suaves */
+  --ink:        #2b2a27;  /* texto principal */
+  --ink-soft:   #69645d;  /* texto secundario; oscurecido para que llegue a 4.5:1 sobre --paper-2 */
+  --terracota:  #8e5237;  /* acento en microtextos: oscuro para que se lea */
+  --terracota-claro: #c08b6e; /* acento sobre fondos oscuros */
+  --terracota-velo:  rgba(142, 82, 55, 0.07); /* relleno apenas perceptible */
+  --terracota-banda: #ecdccf;  /* franjas grandes de fondo */
+  --line:       rgba(43, 42, 39, 0.16);
+  --line-soft:  rgba(43, 42, 39, 0.09);
+
+  /* Tipografía */
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body:    "Jost", "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+
+  /* Medidas */
+  --header-h: 62px;
+  --pad:      clamp(20px, 5vw, 72px);
+  --radius:   0px;                        /* nada redondeado: todo a escuadra */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  /* Cormorant trae por defecto cifras de estilo antiguo, de altura
+     desigual: "10" salía con el uno bajo y el cero alto. Con lining-nums
+     todas van a la altura de las mayúsculas. */
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.is-locked { overflow: hidden; }
+
+/* height:auto es imprescindible: si no, el atributo height="..." del HTML
+   gana a aspect-ratio y las fotos salen con su altura original. */
+img, svg { display: block; max-width: 100%; height: auto; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+h1, h2, h3, h4, p, figure, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 300;
+  top: 10px; left: 10px;
+  padding: 10px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 160ms ease;
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* ---------------------------------------------------------
+   Tipografía
+   --------------------------------------------------------- */
+
+.display {
+  font-family: var(--display);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.18;
+}
+
+.h1, .h2 { color: var(--terracota); }
+.h1 { font-size: clamp(1.9rem, 4.4vw, 3.4rem); }
+.h2 { font-size: clamp(1.45rem, 2.9vw, 2.3rem); }
+.h3 { font-size: clamp(1.05rem, 1.6vw, 1.25rem); letter-spacing: 0.1em; }
+
+/* Microtexto: la pieza que da el carácter editorial */
+.eyebrow {
+  font-family: var(--body);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--terracota);
+}
+.eyebrow--tight { letter-spacing: 0.3em; }
+
+.lead {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  color: var(--ink-soft);
+  max-width: 56ch;
+}
+
+.prose { max-width: 62ch; color: var(--ink-soft); font-size: 0.95rem; }
+.prose p + p { margin-top: 1.2em; }
+.prose strong { color: var(--ink); font-weight: 500; }
+
+.text-link {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: border-color 200ms ease;
+}
+.text-link:hover { border-color: var(--terracota); color: var(--terracota); }
+
+/* ---------------------------------------------------------
+   Botones: rectángulo perfilado, sin relleno ni esquinas
+   --------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 34px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 240ms ease, color 240ms ease;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+.btn--ghost { border-color: var(--line); }
+.btn--ghost:hover { background: transparent; color: var(--terracota); border-color: var(--terracota); }
+
+.btn__arrow { transition: transform 240ms ease; }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ---------------------------------------------------------
+   Cabecera: marca centrada, barra fina
+   --------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  height: var(--header-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 var(--pad);
+  background: rgba(246, 245, 242, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.brand {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  line-height: 1;
+}
+.brand__mark {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.12rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-indent: 0.28em;
+}
+.brand__mark em { font-style: normal; }
+.brand__sub {
+  font-size: 0.52rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-indent: 0.34em;
+}
+
+.nav-toggle {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  width: 40px; height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-direction: column;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--ink);
+  transition: transform 220ms ease, opacity 160ms ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+
+/* ---------------------------------------------------------
+   Menú desplegable (móvil y tableta)
+   --------------------------------------------------------- */
+
+.drawer {
+  position: fixed;
+  z-index: 99;
+  inset: var(--header-h) 0 0 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 8vw, 56px) var(--pad);
+  background: var(--paper);
+  overflow-y: auto;
+}
+.drawer.is-open { display: flex; }
+.drawer__list { display: grid; gap: 0; text-align: center; }
+.drawer__link {
+  display: block;
+  padding: 16px 0;
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 5vw, 1.7rem);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-soft);
+}
+.drawer__link[aria-current="page"] { color: var(--ink-soft); }
+.drawer__foot {
+  margin-top: 40px;
+  display: grid;
+  gap: 10px;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+.drawer__foot a { text-decoration: none; }
+
+/* ---------------------------------------------------------
+   Estructura
+   --------------------------------------------------------- */
+
+.wrap { padding-inline: var(--pad); }
+
+.section { padding-block: clamp(60px, 8vw, 120px); }
+.section--tight { padding-block: clamp(44px, 5vw, 72px); }
+.section--deep { background: var(--paper-2); }
+/* Franja grande de color. El fondo cubre todo el ancho aunque la
+   sección lleve .wrap, porque el relleno entra en la caja del fondo. */
+.section--terracota { background: var(--terracota-banda); }
+
+/* Sobre la franja de color, el texto secundario gris se queda en 4:1 de
+   contraste, por debajo del mínimo legible. Ahí va un tono más oscuro. */
+.section--terracota .prose,
+.section--terracota .lead,
+.section--terracota .dos-columnas { color: #4c4842; }
+
+.section__head {
+  display: grid;
+  gap: 18px;
+  max-width: 880px;
+  margin-bottom: clamp(34px, 4.5vw, 56px);
+}
+
+/* Variante centrada, la que marca el tono de la portada */
+.centered {
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+  text-align: center;
+  max-width: 940px;
+  margin-inline: auto;
+}
+.centered .lead { margin-inline: auto; }
+
+.rule { height: 1px; background: var(--line-soft); border: 0; margin: 0; }
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 900ms cubic-bezier(.2,.7,.3,1), transform 900ms cubic-bezier(.2,.7,.3,1);
+}
+[data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .marquee__track { animation: none !important; }
+}
+
+/* ---------------------------------------------------------
+   Portada
+   --------------------------------------------------------- */
+
+.hero { display: grid; gap: 0; }
+
+.hero__head {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 16px;
+  padding-block: clamp(28px, 4vw, 52px) clamp(22px, 3vw, 38px);
+}
+
+/* En una sola línea siempre: el tamaño se ajusta al ancho de la pantalla
+   para que no parta nunca, ni en un móvil estrecho. */
+.hero__title {
+  white-space: nowrap;
+  font-size: clamp(1.15rem, 7.4vw, 3.6rem);
+}
+.hero__title em { font-style: normal; color: inherit; }
+
+/* A sangre y casi toda la altura de la pantalla: la foto manda. */
+.hero__figure { margin: 0; width: 100%; }
+.hero__figure img {
+  width: 100%;
+  height: min(78vh, 900px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__foot {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 22px;
+  /* Menos aire por abajo: debajo va la línea divisoria y no
+     hace falta separar tanto de la sección siguiente. */
+  padding-block: clamp(34px, 5vw, 64px) clamp(26px, 3.5vw, 44px);
+}
+
+
+/* Franja de imagen a sangre */
+.band { width: 100%; }
+.band img {
+  width: 100%;
+  height: clamp(280px, 44vw, 540px);
+  object-fit: cover;
+}
+
+
+/* Dos imágenes a sangre, una al lado de otra */
+.duo { display: grid; grid-template-columns: 1fr 1fr; }
+.duo img {
+  width: 100%;
+  height: clamp(220px, 30vw, 400px);
+  object-fit: cover;
+}
+
+/* Texto de portada a dos columnas, como en el modelo */
+.dos-columnas {
+  columns: 2;
+  column-gap: clamp(28px, 4vw, 56px);
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.dos-columnas p { margin-bottom: 1em; break-inside: avoid; }
+
+/* Banda de disciplinas */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--line-soft);
+  padding-block: 14px;
+}
+.marquee__track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__group { display: flex; align-items: center; gap: 34px; padding-right: 34px; }
+.marquee__item {
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.marquee__dot { color: var(--line); font-size: 0.5rem; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------------------------------------------------------
+   Rejillas, tarjetas y figuras
+   --------------------------------------------------------- */
+
+.grid { display: grid; gap: clamp(22px, 3vw, 40px); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+.split {
+  display: grid;
+  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.split--text-right { grid-template-columns: 0.9fr 1.1fr; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  background: transparent;
+}
+.card__num {
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: var(--terracota);
+}
+.card__body { color: var(--ink-soft); font-size: 0.9rem; }
+.card__meta {
+  margin-top: auto;
+  padding-top: 16px;
+  display: grid;
+  gap: 8px;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+}
+.card__meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.card__meta dt { color: var(--ink-soft); text-transform: uppercase; font-size: 0.58rem; letter-spacing: 0.2em; }
+.card__meta dd { margin: 0; text-align: right; }
+
+.figure { margin: 0; display: grid; gap: 12px; }
+.figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.figure--wide img { aspect-ratio: 16 / 11; }
+.figure figcaption {
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   Horario
+   Una tabla de las seis franjas que existen de verdad, en vez
+   de una rejilla por horas: así no hay dos horas y media
+   vacías al mediodía ni celdas aplastadas cuando coinciden
+   tres clases. En móvil la tabla no cabe y se pasa a lista.
+   --------------------------------------------------------- */
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-bottom: 20px;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.leyenda__item { display: flex; align-items: center; gap: 9px; }
+.leyenda__color { width: 13px; height: 13px; border-left: 2px solid; }
+.leyenda__color--arancha { background: #dfe4da; border-color: #7d8a72; }
+.leyenda__color--raquel  { background: #eae4d6; border-color: #a3936e; }
+.leyenda__color--valeria { background: #dde1e6; border-color: #75818d; }
+
+.tabla-marco { border: 1px solid var(--line-soft); background: var(--paper); overflow-x: auto; }
+
+.tabla-horario {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.tabla-horario th,
+.tabla-horario td {
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  border-right: 1px solid var(--line-soft);
+}
+.tabla-horario th:last-child,
+.tabla-horario td:last-child { border-right: 0; }
+.tabla-horario tbody tr:last-child th,
+.tabla-horario tbody tr:last-child td { border-bottom: 0; }
+
+.tabla-horario thead th {
+  padding-block: 14px;
+  background: var(--paper-2);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.tabla-horario__hora {
+  width: 118px;
+  font-family: var(--display);
+  font-size: 1.02rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+/* Las casillas sin clase llevan solo un tono muy suave: basta para
+   que el ojo las descarte, sin competir con las clases de al lado. */
+.tabla-horario .vacia { background: var(--terracota-velo); }
+
+/* Una clase, en la tabla y en la lista */
+.clase {
+  display: block;
+  padding: 7px 9px;
+  border-left: 2px solid;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.clase + .clase { margin-top: 6px; }
+.clase--arancha { background: #dfe4da; border-color: #7d8a72; color: #394334; }
+.clase--raquel  { background: #eae4d6; border-color: #a3936e; color: #4a4130; }
+.clase--valeria { background: #dde1e6; border-color: #75818d; color: #353d45; }
+
+.clase__que { display: block; }
+.clase__quien {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ---- Lista por días, para el móvil ---- */
+
+.week { display: none; }
+.week__day { padding-block: 24px; border-bottom: 1px solid var(--line-soft); }
+.week__day:last-child { border-bottom: 0; }
+.week__name {
+  margin-bottom: 14px;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.week__slots { display: grid; gap: 18px; }
+
+.franja { display: grid; gap: 7px; }
+.franja__hora {
+  font-family: var(--display);
+  font-size: 1.24rem;
+  letter-spacing: 0.05em;
+}
+
+.precio {
+  margin-top: 30px;
+  font-family: var(--display);
+  font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.precio strong { font-weight: 400; }
+
+/* ---------------------------------------------------------
+   Monográficos
+   --------------------------------------------------------- */
+
+.workshop {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: clamp(18px, 3vw, 44px);
+  align-items: center;
+  padding-block: clamp(24px, 3vw, 36px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.workshop:first-of-type { border-top: 1px solid var(--line-soft); }
+.workshop__date { display: grid; gap: 4px; text-align: center; }
+.workshop__day { font-family: var(--display); font-size: 2rem; font-weight: 300; line-height: 1; }
+.workshop__month { font-size: 0.55rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--terracota); }
+.workshop__body { display: grid; gap: 10px; }
+.workshop__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   Cita
+   --------------------------------------------------------- */
+
+.quote { display: grid; gap: 22px; justify-items: center; text-align: center; max-width: 820px; margin-inline: auto; }
+.quote__text {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2.6vw, 1.9rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  text-transform: none;
+}
+.quote__by { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft); }
+
+/* ---------------------------------------------------------
+   Llamada final
+   --------------------------------------------------------- */
+
+.cta {
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(52px, 7vw, 96px) var(--pad);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+}
+.cta .lead { color: var(--ink-soft); }
+
+/* ---------------------------------------------------------
+   Contacto
+   --------------------------------------------------------- */
+
+.contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+.contact-list { display: grid; gap: 0; }
+.contact-item { display: grid; gap: 6px; padding: 22px 0; border-bottom: 1px solid var(--line-soft); }
+.contact-item:first-child { border-top: 1px solid var(--line-soft); }
+.contact-item dt { font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft); }
+.contact-item dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  letter-spacing: 0.08em;
+}
+.contact-item dd a { text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 200ms ease; }
+.contact-item dd a:hover { border-color: var(--ink); }
+
+.map { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--line-soft); filter: grayscale(1) contrast(0.92); }
+
+/* ---------------------------------------------------------
+   Páginas internas y piezas sueltas
+   --------------------------------------------------------- */
+
+.page-hero {
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+  text-align: center;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-block: clamp(44px, 6.5vw, 92px) clamp(28px, 4vw, 52px);
+}
+.page-hero .h1 { font-size: clamp(1.7rem, 4vw, 3rem); }
+/* Dentro de un titular ya en terracota, lo destacado no cambia de color:
+   se distingue por la cursiva del texto original, no por el tono. */
+.page-hero em, .h1 em, .h2 em { font-style: normal; color: inherit; }
+
+.note {
+  display: grid;
+  gap: 8px;
+  padding: 22px 26px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper-2);
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.note strong { color: var(--ink); font-weight: 500; }
+
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 20px); }
+.gallery img { aspect-ratio: 3 / 4; object-fit: cover; }
+
+.faq { display: grid; }
+.faq__item { padding-block: 24px; border-bottom: 1px solid var(--line-soft); }
+.faq__item:first-child { border-top: 1px solid var(--line-soft); }
+.faq__q { font-family: var(--display); font-size: 1.08rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.faq__a { color: var(--ink-soft); font-size: 0.9rem; max-width: 70ch; }
+
+/* ---------------------------------------------------------
+   Pie
+   --------------------------------------------------------- */
+
+.site-footer {
+  padding: clamp(52px, 6vw, 84px) var(--pad) 30px;
+  border-top: 1px solid var(--line-soft);
+  background: var(--paper-2);
+}
+.footer__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(28px, 4vw, 56px); padding-bottom: 44px; }
+.footer__col { display: grid; gap: 12px; align-content: start; font-size: 0.85rem; }
+.footer__title { font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 4px; }
+.footer__col a { text-decoration: none; color: var(--ink-soft); transition: color 200ms ease; }
+.footer__col a:hover { color: var(--ink); }
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   Aviso de borrador — BORRAR cuando el contenido sea real.
+   --------------------------------------------------------- */
+
+.draft-flag {
+  position: relative;
+  z-index: 200;
+  padding: 9px var(--pad);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.56rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.draft-flag a { color: inherit; }
+.draft-flag { color: var(--paper); }
+
+/* Los datos sin confirmar ya no se resaltan, pero siguen llevando el
+   atributo data-pendiente en el HTML: `grep -rn "data-pendiente" *.html`
+   los localiza, y están listados en REVISAR.md. Para volver a verlos en
+   pantalla, descomenta esto.
+
+[data-pendiente] {
+  background: rgba(141, 148, 132, 0.22);
+  box-shadow: 0 0 0 1px rgba(141, 148, 132, 0.5);
+}
+*/
+
+/* ---------------------------------------------------------
+   Los hijos de un grid tienen min-width:auto, así que una
+   imagen grande ensancha su columna y descuadra la página.
+   --------------------------------------------------------- */
+
+.split > *, .grid > *, .gallery > *,
+.contact-grid > *, .workshop > *, .footer__top > *, .duo > * { min-width: 0; }
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+  .split, .split--text-right { grid-template-columns: 1fr; }
+  .tabla-marco { display: none; }
+  .week { display: block; }
+  .workshop { grid-template-columns: 72px 1fr; }
+  .workshop .btn { grid-column: 2; justify-self: start; }
+  .footer__top { grid-template-columns: 1fr 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery figure:nth-child(3) { display: none; }
+  .dos-columnas { columns: 1; }
+}
+
+@media (max-width: 560px) {
+  .grid--3, .grid--2 { grid-template-columns: 1fr; }
+  .footer__top { grid-template-columns: 1fr; }
+  .duo { grid-template-columns: 1fr; }
+  .btn { width: 100%; }
+  .btn-row { flex-direction: column; width: 100%; }
+  .workshop .btn { width: auto; }
+  .nav__cta { display: none; }
+}
+
+@media print {
+  .site-header, .drawer, .nav-toggle, .draft-flag, .cta, .marquee { display: none !important; }
+  body { background: #fff; }
+}
+
+
+/* ---------------------------------------------------------
+   Formulario de la clase de prueba
+   --------------------------------------------------------- */
+
+.formulario {
+  display: grid;
+  gap: clamp(24px, 3vw, 34px);
+  max-width: 620px;
+  margin-inline: auto;
+}
+
+.campo { display: grid; gap: 8px; }
+
+/* :not(.opcion) porque las opciones del radio también son <label>
+   hijas de .campo, y si no heredan el estilo de microtexto. */
+.campo > label:not(.opcion),
+.campo legend {
+  font-size: 0.58rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0;
+}
+
+.campo__opcional {
+  letter-spacing: 0.16em;
+  opacity: 0.6;
+  text-transform: none;
+}
+
+.campo__ayuda { font-size: 0.82rem; color: var(--ink-soft); }
+
+.campo input[type="text"],
+.campo input[type="number"],
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  font-size: 0.95rem;
+  font-weight: 300;
+  transition: border-color 200ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.campo textarea { resize: vertical; min-height: 90px; font-family: inherit; }
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus { border-color: var(--ink); outline: none; }
+.campo ::placeholder { color: var(--ink-soft); opacity: 0.65; }
+
+.campo select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%),
+                    linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 40px;
+}
+
+.campo--opciones { border: 0; margin: 0; padding: 0; }
+.campo--opciones legend { margin-bottom: 12px; }
+
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  border: 1px solid var(--line-soft);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.opcion + .opcion { margin-top: 8px; }
+.opcion:hover { border-color: var(--line); }
+.opcion input { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; }
+.opcion:has(input:checked) { border-color: var(--ink); background: var(--paper-2); }
+
+.formulario__aviso {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  padding-top: 4px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.formulario__pie { display: grid; gap: 14px; justify-items: start; }
+.formulario__pie .btn { width: 100%; }
+
+.formulario__error {
+  font-size: 0.85rem;
+  color: #8a3a24;
+  padding: 10px 14px;
+  border-left: 2px solid #8a3a24;
+  background: rgba(138, 58, 36, 0.07);
+  width: 100%;
+}
+
+/* Línea corta bajo los botones de la portada */
+.hero__nota {
+  margin-top: 4px;
+  padding: 9px 20px;
+  background: var(--terracota-banda);
+  color: var(--terracota);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+/* Cada teléfono de contacto lleva su acceso directo a WhatsApp al lado */
+.contact-item dd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.contact-item__wa {
+  font-family: var(--body);
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.contact-item__wa:hover { color: var(--ink); }
+
+/* ---------------------------------------------------------
+   Tarifas
+   --------------------------------------------------------- */
+
+/* Dos tarifas a cada lado: las del curso y las sueltas, cada grupo con
+   su rótulo, para que no se lean como una sola lista de cuatro. */
+.tarifas {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+.tarifas > * { min-width: 0; }
+.tarifas__col { display: grid; gap: 0; }
+/* Los rótulos de cada columna, sobre fondo de color, como los títulos
+   de los talleres: son los que explican que una columna son cuotas
+   mensuales y la otra pagos de una vez. */
+.tarifas__titulo {
+  justify-self: start;
+  margin-bottom: 14px;
+  padding: 7px 15px;
+  background: var(--terracota-banda);
+  color: var(--terracota);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.tarifa {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.tarifa:first-child { border-top: 1px solid var(--line-soft); }
+
+.tarifa__que { font-size: 0.95rem; color: var(--ink-soft); }
+.tarifa__cuanto {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.tarifa__cuanto small {
+  font-family: var(--body);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tarifas__nota {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .tarifas { grid-template-columns: 1fr; }
+}
+
+/* Titular que no debe partirse solo: la primera línea va entera y el
+   corte lo decide el <br>. El tamaño se calcula sobre el ancho de
+   pantalla para que entre también en un móvil estrecho. */
+/* El selector lleva .page-hero delante porque si no gana la regla
+   .page-hero .h1, que es más específica, y el titular se sale. */
+.page-hero .h1--una-linea {
+  white-space: nowrap;
+  font-size: clamp(1rem, 5.6vw, 3rem);
+}
+
+/* El título de cada taller, sobre un fondo de color para que se separe
+   de la descripción y la lista se recorra de un vistazo.
+   justify-self:start porque es un hijo de grid y si no se estiraría a
+   todo el ancho de la columna. */
+.workshop__body h3 {
+  justify-self: start;
+  padding: 7px 16px;
+  background: var(--terracota-banda);
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------
+   Tarjeta regalo
+   --------------------------------------------------------- */
+
+.regalo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.regalo > * { min-width: 0; }
+
+.regalo__opciones { display: grid; gap: 0; }
+
+.regalo__opcion {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 20px;
+  align-items: center;
+  padding-block: 22px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.regalo__texto { display: grid; gap: 8px; min-width: 0; }
+.regalo__btn {
+  padding: 11px 22px;
+  font-size: 0.56rem;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+}
+.regalo__opcion:first-child { border-top: 1px solid var(--line-soft); }
+.regalo__num {
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: var(--terracota);
+}
+.regalo__opcion p { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* --- La muestra de la tarjeta, dibujada con CSS --- */
+
+/* min-width:0 porque la cara de la tarjeta es un hijo de grid: sin
+   esto no baja de su ancho mínimo de contenido y en una pantalla de
+   320 px se sale seis píxeles. */
+.tarjeta { margin: 0; display: grid; gap: 14px; justify-items: center; }
+.tarjeta > *, .tarjeta__marco > * { min-width: 0; max-width: 100%; }
+
+.tarjeta__cara {
+  position: relative;
+  /* Sin overflow:hidden a propósito: la foto ya encaja exacta con
+     inset:0, y si algún día el contenido no cupiera preferimos verlo
+     salir a que se recorte sin avisar. */
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1.6 / 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: clamp(10px, 1.6vw, 16px);
+  padding: clamp(18px, 2.8vw, 28px);
+  background: var(--paper);
+  border: 1px solid var(--terracota);
+  box-shadow: 10px 10px 0 var(--terracota-banda);
+}
+
+/* La foto va detrás de todo y muy apagada: da textura sin robar
+   protagonismo al texto. aria-hidden y alt vacío porque es decorativa. */
+.tarjeta__fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 0.15: la foto se nota bastante más que al 0.07 de antes. Para que
+     siga siendo legible, los textos pequeños de la tarjeta usan tonos
+     propios más oscuros (ver abajo), y así el peor caso —texto sobre la
+     parte más oscura de la foto— se queda en 5:1. */
+  opacity: 0.15;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+.tarjeta__cara > *:not(.tarjeta__fondo) { position: relative; z-index: 1; }
+
+.tarjeta__marca { display: grid; gap: 3px; justify-items: center; text-align: center; }
+.tarjeta__nombre {
+  font-family: var(--display);
+  font-size: 0.86rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-indent: 0.26em;
+}
+.tarjeta__nombre em { font-style: normal; color: var(--terracota); }
+.tarjeta__sub {
+  font-size: 0.46rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #58544e;
+  text-indent: 0.32em;
+}
+
+.tarjeta__cuerpo {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+}
+.tarjeta__etiqueta {
+  font-size: 0.5rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #7d4629;
+}
+.tarjeta__concepto {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.tarjeta__lineas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tarjeta__linea {
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.5rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #58544e;
+}
+
+.tarjeta__pie {
+  font-size: 0.46rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #58544e;
+  text-align: center;
+}
+
+.tarjeta figcaption {
+  font-size: 0.56rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 860px) {
+  .regalo { grid-template-columns: 1fr; }
+  .tarjeta { order: -1; }
+}
+
+@media (max-width: 520px) {
+  /* El botón no cabe al lado del texto: pasa debajo */
+  .regalo__opcion { grid-template-columns: 1fr; }
+  .regalo__btn { justify-self: start; width: auto; }
+}
+
+/* A quién va dirigido cada taller. Va en la misma línea de datos que el
+   horario y el precio, del mismo tamaño, pero con fondo de color para
+   que salte a la vista: es lo primero que se pregunta quien lo lee. */
+.publico {
+  padding: 3px 10px;
+  margin: -3px 0;
+  background: var(--terracota-banda);
+  color: var(--terracota);
+  font-weight: 500;
+}
+
+/* El precio va dentro del titular, detrás de la última palabra, para
+   que quede pegado al texto en las cuatro modalidades por igual. */
+.regalo__precio {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  background: var(--terracota-banda);
+  color: var(--terracota);
+  font-family: var(--body);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  vertical-align: 0.15em;
+}
+
+/* ---------------------------------------------------------
+   Ver la tarjeta regalo más grande
+   --------------------------------------------------------- */
+
+.tarjeta__marco { position: relative; display: grid; width: 100%; justify-items: center; }
+
+.tarjeta__zoom {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.tarjeta__zoom-texto {
+  padding: 8px 18px;
+  background: var(--terracota);
+  color: var(--paper);
+  font-size: 0.56rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.tarjeta__zoom:hover .tarjeta__zoom-texto,
+.tarjeta__zoom:focus-visible .tarjeta__zoom-texto { opacity: 1; }
+
+/* Sin ratón no hay hover que revele la pista, así que en táctil y en
+   pantallas pequeñas se ve siempre. */
+@media (hover: none), (max-width: 860px) {
+  .tarjeta__zoom { place-items: end center; padding-bottom: 10px; }
+  .tarjeta__zoom-texto { opacity: 1; }
+}
+
+.visor {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  height: 100%;
+  margin: 0;
+  padding: clamp(16px, 4vw, 48px);
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+}
+.visor::backdrop { background: rgba(43, 42, 39, 0.82); }
+.visor:not([open]) { display: none; }
+
+.visor__contenido { display: grid; justify-items: center; width: 100%; }
+
+/* La tarjeta clonada, en grande: el texto crece con ella */
+.visor .tarjeta__cara { max-width: min(92vw, 760px); box-shadow: 16px 16px 0 rgba(43, 42, 39, 0.35); }
+.visor .tarjeta__nombre   { font-size: clamp(0.95rem, 2.2vw, 1.4rem); }
+.visor .tarjeta__sub      { font-size: clamp(0.5rem, 1.1vw, 0.7rem); }
+.visor .tarjeta__etiqueta { font-size: clamp(0.55rem, 1.2vw, 0.75rem); }
+.visor .tarjeta__concepto { font-size: clamp(1.4rem, 4.2vw, 2.6rem); }
+.visor .tarjeta__linea    { font-size: clamp(0.55rem, 1.1vw, 0.72rem); }
+.visor .tarjeta__pie      { font-size: clamp(0.5rem, 1vw, 0.68rem); }
+
+.visor__cerrar {
+  position: fixed;
+  top: clamp(12px, 2.5vw, 28px);
+  right: clamp(12px, 2.5vw, 28px);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(248, 245, 241, 0.4);
+  background: transparent;
+  color: var(--paper);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.visor__cerrar:hover { background: rgba(248, 245, 241, 0.14); }
+
+/* En el móvil la tarjeta ya ocupa casi todo el ancho, así que ampliarla
+   manteniendo el formato apaisado no gana nada. Ahí se deja crecer a lo
+   alto: el texto sube de tamaño, que es para lo que se amplía. */
+@media (max-width: 640px) {
+  .visor { padding: 14px; }
+  .visor .tarjeta__cara {
+    aspect-ratio: auto;
+    min-height: min(76vh, 540px);
+    max-width: 96vw;
+    gap: 20px;
+  }
+  .visor .tarjeta__concepto { font-size: clamp(1.6rem, 9vw, 2.4rem); }
+  .visor .tarjeta__nombre   { font-size: 1.15rem; }
+  .visor .tarjeta__etiqueta { font-size: 0.62rem; }
+  .visor .tarjeta__linea    { font-size: 0.6rem; }
+  .visor .tarjeta__pie      { font-size: 0.58rem; }
+}

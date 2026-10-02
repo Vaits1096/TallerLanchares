@@ -1,0 +1,13 @@
+# El HTML no se cachea: así un cambio de textos u horarios se ve al instante.
+# Los assets van versionados con ?v=N, por eso pueden cachearse más tiempo.
+
+/*.html
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/
+  Cache-Control: no-cache
+
+/assets/*
+  Cache-Control: public, max-age=604800
