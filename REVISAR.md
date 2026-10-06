@@ -152,7 +152,7 @@ borrarlas o colocarlas en algún sitio.
 ## 7. La tarjeta regalo
 
 El apartado está en la portada con cuatro modalidades: bono de 10 clases (130 €), clase
-suelta (15 €), taller creativo de fin de semana (40 € o 50 €) y un mes de pintura (50 € o
+suelta (17 €), taller creativo de fin de semana (40 € o 50 €) y un mes de pintura (50 € o
 90 €). Cada una tiene su botón «Comprar» al lado, que abre el WhatsApp de Raquel diciendo
 cuál de las cuatro es.
 
