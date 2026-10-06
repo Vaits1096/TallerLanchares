@@ -750,35 +750,6 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 /* ---------------------------------------------------------
-   Aviso de borrador — BORRAR cuando el contenido sea real.
-   --------------------------------------------------------- */
-
-.draft-flag {
-  position: relative;
-  z-index: 200;
-  padding: 9px var(--pad);
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 0.56rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  text-align: center;
-}
-.draft-flag a { color: inherit; }
-.draft-flag { color: var(--paper); }
-
-/* Los datos sin confirmar ya no se resaltan, pero siguen llevando el
-   atributo data-pendiente en el HTML: `grep -rn "data-pendiente" *.html`
-   los localiza, y están listados en REVISAR.md. Para volver a verlos en
-   pantalla, descomenta esto.
-
-[data-pendiente] {
-  background: rgba(141, 148, 132, 0.22);
-  box-shadow: 0 0 0 1px rgba(141, 148, 132, 0.5);
-}
-*/
-
-/* ---------------------------------------------------------
    Los hijos de un grid tienen min-width:auto, así que una
    imagen grande ensancha su columna y descuadra la página.
    --------------------------------------------------------- */
@@ -818,7 +789,7 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 @media print {
-  .site-header, .drawer, .nav-toggle, .draft-flag, .cta, .marquee { display: none !important; }
+  .site-header, .drawer, .nav-toggle, .cta, .marquee { display: none !important; }
   body { background: #fff; }
 }
 
