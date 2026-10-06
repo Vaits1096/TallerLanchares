@@ -94,9 +94,9 @@ dijiste, porque son los mismos talleres en otro día:
 
 | Fecha | Taller | Para | Precio |
 | --- | --- | --- | --- |
-| Domingo 1 de noviembre | Halloween | Niños | 40 € |
+| Sábado 31 de octubre | Halloween | Niños | 40 € |
 | Domingo 13 de diciembre | Tarjetas navideñas | Adultos | 50 € |
-| Domingo 20 de diciembre | Navidad | Niños | 40 € |
+| Sábado 19 de diciembre | Navidad | Niños | 40 € |
 
 Los tres de 10:00 a 13:00, con 12 plazas. Dos cosas a confirmar:
 
