@@ -894,6 +894,102 @@ ul, ol { padding: 0; list-style: none; }
   width: 100%;
 }
 
+/* ---------------------------------------------------------
+   Ficha de inscripción
+   --------------------------------------------------------- */
+
+.formulario--ficha { gap: clamp(30px, 4vw, 44px); }
+
+.bloque { border: 0; margin: 0; padding: 0; display: grid; gap: 18px; min-width: 0; }
+.bloque__titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 0 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.bloque__titulo span { color: var(--ink-soft); }
+
+.campo input[type="date"],
+.campo input[type="tel"],
+.campo input[type="email"] {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  font-size: 0.95rem;
+  font-weight: 300;
+  font-family: inherit;
+  transition: border-color 200ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.campo input[type="date"]:focus,
+.campo input[type="tel"]:focus,
+.campo input[type="email"]:focus { border-color: var(--ink); outline: none; }
+
+.dia { border: 1px solid var(--line-soft); background: var(--paper); }
+.dia[open] { border-color: var(--line); }
+.dia summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.dia summary::-webkit-details-marker { display: none; }
+.dia summary::after { content: "+"; color: var(--ink-soft); margin-left: 4px; }
+.dia[open] summary::after { content: "\2212"; }
+.dia__nombre { flex: 1; font-size: 0.98rem; }
+.dia__n { font-size: 0.72rem; color: var(--ink-soft); }
+.dia__grupos { display: grid; gap: 8px; padding: 0 12px 14px; }
+.dia__grupos .opcion + .opcion { margin-top: 0; }
+.dia__quien { font-style: normal; color: var(--ink-soft); font-size: 0.85rem; }
+.dia:has(input:checked) summary .dia__nombre::after {
+  content: "\00a0\00b7\00a0seleccionado";
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.tarifas__resumen {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  display: grid;
+  gap: 6px;
+}
+.tarifas__resumen strong { color: var(--ink); font-weight: 500; }
+
+.normas { border: 1px solid var(--line-soft); background: var(--paper); }
+.normas[open] { border-color: var(--line); }
+.normas summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer; list-style: none; font-size: 0.98rem;
+}
+.normas summary::-webkit-details-marker { display: none; }
+.normas summary::after { content: "+"; color: var(--ink-soft); }
+.normas[open] summary::after { content: "\2212"; }
+.normas summary .dia__n { margin-left: auto; }
+.normas__texto { padding: 0 16px 16px; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); }
+.normas__titulo {
+  margin: 18px 0 6px; font-size: 0.6rem; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--ink); font-weight: 500;
+}
+.normas ol { padding-left: 1.3em; list-style: decimal; display: grid; gap: 4px; }
+.normas strong { color: var(--ink); font-weight: 500; }
+
+.opcion--texto { align-items: flex-start; font-size: 0.85rem; line-height: 1.55; }
+.opcion--texto input { margin-top: 3px; flex: none; }
+
 /* Línea corta bajo los botones de la portada */
 .hero__nota {
   margin-top: 4px;

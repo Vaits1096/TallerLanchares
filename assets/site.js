@@ -123,6 +123,99 @@
   });
 })();
 
+/* --- Ficha de inscripción: abre WhatsApp con la ficha escrita ----------
+   Igual que la clase de prueba: la web es estática, así que se redacta
+   el mensaje y se abre WhatsApp. Mismo número (el de Raquel). */
+
+(function () {
+  'use strict';
+
+  var TELEFONO_TALLER = '34660671394';
+
+  var form = document.getElementById('form-inscripcion');
+  if (!form) return;
+
+  var error = document.getElementById('ins-error');
+
+  function mostrarError(texto, campo) {
+    if (error) { error.textContent = texto; error.hidden = false; }
+    if (campo && campo.focus) campo.focus();
+  }
+
+  function esMenor(iso) {
+    var n = new Date(iso);
+    if (isNaN(n)) return false;
+    var hoy = new Date();
+    var edad = hoy.getFullYear() - n.getFullYear();
+    var m = hoy.getMonth() - n.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < n.getDate())) edad--;
+    return edad < 18;
+  }
+
+  function fechaLegible(iso) {
+    var p = iso.split('-');
+    return p[2] + '/' + p[1] + '/' + p[0];
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (error) error.hidden = true;
+
+    var v = function (n) { return form.elements[n].value.trim(); };
+    var grupos = Array.prototype.map.call(
+      form.querySelectorAll('input[name="grupo"]:checked'),
+      function (i) { return i.value; }
+    );
+    var menor = v('nacimiento') && esMenor(v('nacimiento'));
+
+    if (!v('nombre'))    return mostrarError('Nos falta el nombre.', form.nombre);
+    if (!v('apellidos')) return mostrarError('Nos faltan los apellidos.', form.apellidos);
+    if (!v('nacimiento')) return mostrarError('Nos falta la fecha de nacimiento.', form.nacimiento);
+    if (!grupos.length)  return mostrarError('Elige al menos un grupo.');
+    if (!v('telefono'))  return mostrarError('Nos falta un teléfono.', form.telefono);
+    if (!v('email'))     return mostrarError('Nos falta un email.', form.email);
+    if (menor && (!v('tutor') || !v('tutorTel'))) {
+      return mostrarError('Al ser menor, necesitamos el nombre y el teléfono de la madre, padre o tutor.', form.tutor);
+    }
+    var pago = form.querySelector('input[name="pago"]:checked');
+    if (!pago) return mostrarError('Dinos cómo prefieres pagar.');
+    if (!form.normas.checked) return mostrarError('Para apuntarte tienes que aceptar las normas de funcionamiento.', form.normas);
+    if (!form.datos.checked) return mostrarError('Necesitamos tu permiso para tratar los datos.', form.datos);
+
+    var familiar = form.querySelector('input[name="familiar"]:checked');
+    var conocio = form.querySelector('input[name="conocio"]:checked');
+
+    var l = [
+      '¡Hola! Quiero inscribirme en las clases.',
+      '',
+      'Nombre: ' + v('nombre') + ' ' + v('apellidos'),
+      'Fecha de nacimiento: ' + fechaLegible(v('nacimiento')),
+      '',
+      'Grupos:'
+    ];
+    grupos.forEach(function (g) { l.push('- ' + g); });
+    l.push('', 'Teléfono: ' + v('telefono'), 'Email: ' + v('email'));
+    if (menor) {
+      l.push('', 'Madre/padre/tutor: ' + v('tutor'));
+      if (v('tutorDni')) l.push('DNI: ' + v('tutorDni'));
+      l.push('Teléfono: ' + v('tutorTel'));
+      if (v('tutorEmail')) l.push('Email: ' + v('tutorEmail'));
+    }
+    l.push('');
+    l.push('Forma de pago: ' + pago.value);
+    if (familiar) l.push('Familiar directo inscrito: ' + familiar.value);
+    if (conocio) l.push('Nos conoció por: ' + conocio.value);
+    if (v('nota')) l.push('Nota: ' + v('nota'));
+    l.push('Acepto las normas de funcionamiento: Sí',
+           'Autorizo el tratamiento de datos: Sí',
+           'Autorizo el uso de imagen: ' + (form.imagen.checked ? 'Sí' : 'No'));
+
+    var url = 'https://wa.me/' + TELEFONO_TALLER + '?text=' + encodeURIComponent(l.join('\n'));
+    var ventana = window.open(url, '_blank', 'noopener');
+    if (!ventana) window.location.href = url;
+  });
+})();
+
 /* --- Ver la tarjeta regalo más grande -------------------------------
    El visor es un <dialog>, así que el navegador se encarga de cerrar
    con Escape y de no dejar el foco por detrás. La tarjeta no se
