@@ -539,6 +539,20 @@ ul, ol { padding: 0; list-style: none; }
 .taller__titulo a { text-decoration: none; }
 .taller__titulo a:hover { color: var(--terracota); }
 .taller__meta { font-size: 0.78rem; letter-spacing: 0.05em; color: var(--ink-soft); }
+.taller__marco { position: relative; }
+.taller__sello {
+  position: absolute;
+  left: 12px; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 0;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(142, 82, 55, 0.62);
+}
 .taller__completo {
   font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--terracota); border: 1px solid var(--terracota); padding: 4px 10px;
