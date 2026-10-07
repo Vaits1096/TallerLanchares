@@ -815,6 +815,30 @@ ul, ol { padding: 0; list-style: none; }
 
 .map { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--line-soft); filter: grayscale(1) contrast(0.92); }
 
+/* Contacto */
+.personas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2.5vw, 28px); max-width: 960px; margin-inline: auto; }
+.persona {
+  display: grid; justify-items: center; gap: 10px; text-align: center;
+  padding: clamp(22px, 3vw, 34px) 18px;
+  border: 1px solid var(--cp-borde); border-radius: 22px; background: var(--cp-fondo);
+}
+.persona--arancha { --cp-fondo: #dfe4da; --cp-borde: #7d8a72; }
+.persona--raquel  { --cp-fondo: #eae4d6; --cp-borde: #a3936e; }
+.persona--valeria { --cp-fondo: #dde1e6; --cp-borde: #75818d; }
+.persona__nombre { font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: 0.08em; text-transform: uppercase; }
+.persona__tel { font-size: 1.05rem; letter-spacing: 0.04em; text-decoration: none; }
+.persona__wa { margin-top: 6px; background: rgba(255, 255, 255, 0.45); }
+
+.contact-grid--color { max-width: 960px; margin-inline: auto; align-items: stretch; }
+.datos { display: grid; gap: 14px; align-content: start; }
+.dato { padding: 18px 22px; border-radius: 18px; background: var(--paper-2); display: grid; gap: 6px; }
+.dato__titulo { font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--terracota); }
+.dato a, .dato p:not(.dato__titulo) { font-size: 1rem; color: var(--ink); text-decoration: none; }
+.dato a:hover { color: var(--terracota); }
+.mapa-marco { padding: 14px; border-radius: 22px; background: var(--terracota-banda); display: grid; gap: 12px; align-content: start; }
+.mapa-marco .map { border: 0; border-radius: 12px; }
+.mapa-marco__pie { font-size: 0.86rem; color: var(--ink-soft); padding-inline: 6px 6px; }
+
 /* ---------------------------------------------------------
    Páginas internas y piezas sueltas
    --------------------------------------------------------- */
@@ -895,6 +919,7 @@ ul, ol { padding: 0; list-style: none; }
 @media (max-width: 1000px) {
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
   .contact-grid { grid-template-columns: 1fr; }
+  .personas { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 860px) {
@@ -1417,98 +1442,8 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 /* ---------------------------------------------------------
-   Ver la tarjeta regalo más grande
+   Tarjeta regalo
    --------------------------------------------------------- */
 
 .tarjeta__marco { position: relative; display: grid; width: 100%; justify-items: center; }
 
-.tarjeta__zoom {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  border: 0;
-  background: transparent;
-  cursor: zoom-in;
-}
-.tarjeta__zoom-texto {
-  padding: 8px 18px;
-  background: var(--terracota);
-  color: var(--paper);
-  font-size: 0.56rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 200ms ease;
-}
-.tarjeta__zoom:hover .tarjeta__zoom-texto,
-.tarjeta__zoom:focus-visible .tarjeta__zoom-texto { opacity: 1; }
-
-/* Sin ratón no hay hover que revele la pista, así que en táctil y en
-   pantallas pequeñas se ve siempre. */
-@media (hover: none), (max-width: 860px) {
-  .tarjeta__zoom { place-items: end center; padding-bottom: 10px; }
-  .tarjeta__zoom-texto { opacity: 1; }
-}
-
-.visor {
-  width: 100%;
-  max-width: none;
-  max-height: none;
-  height: 100%;
-  margin: 0;
-  padding: clamp(16px, 4vw, 48px);
-  border: 0;
-  background: transparent;
-  display: grid;
-  place-items: center;
-}
-.visor::backdrop { background: rgba(43, 42, 39, 0.82); }
-.visor:not([open]) { display: none; }
-
-.visor__contenido { display: grid; justify-items: center; width: 100%; }
-
-/* La tarjeta clonada, en grande: el texto crece con ella */
-.visor .tarjeta__cara { max-width: min(92vw, 760px); box-shadow: 16px 16px 0 rgba(43, 42, 39, 0.35); }
-.visor .tarjeta__nombre   { font-size: clamp(0.95rem, 2.2vw, 1.4rem); }
-.visor .tarjeta__sub      { font-size: clamp(0.5rem, 1.1vw, 0.7rem); }
-.visor .tarjeta__etiqueta { font-size: clamp(0.55rem, 1.2vw, 0.75rem); }
-.visor .tarjeta__concepto { font-size: clamp(1.4rem, 4.2vw, 2.6rem); }
-.visor .tarjeta__linea    { font-size: clamp(0.55rem, 1.1vw, 0.72rem); }
-.visor .tarjeta__pie      { font-size: clamp(0.5rem, 1vw, 0.68rem); }
-
-.visor__cerrar {
-  position: fixed;
-  top: clamp(12px, 2.5vw, 28px);
-  right: clamp(12px, 2.5vw, 28px);
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(248, 245, 241, 0.4);
-  background: transparent;
-  color: var(--paper);
-  font-size: 1.4rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 200ms ease;
-}
-.visor__cerrar:hover { background: rgba(248, 245, 241, 0.14); }
-
-/* En el móvil la tarjeta ya ocupa casi todo el ancho, así que ampliarla
-   manteniendo el formato apaisado no gana nada. Ahí se deja crecer a lo
-   alto: el texto sube de tamaño, que es para lo que se amplía. */
-@media (max-width: 640px) {
-  .visor { padding: 14px; }
-  .visor .tarjeta__cara {
-    aspect-ratio: auto;
-    min-height: min(76vh, 540px);
-    max-width: 96vw;
-    gap: 20px;
-  }
-  .visor .tarjeta__concepto { font-size: clamp(1.6rem, 9vw, 2.4rem); }
-  .visor .tarjeta__nombre   { font-size: 1.15rem; }
-  .visor .tarjeta__etiqueta { font-size: 0.62rem; }
-  .visor .tarjeta__linea    { font-size: 0.6rem; }
-  .visor .tarjeta__pie      { font-size: 0.58rem; }
-}
