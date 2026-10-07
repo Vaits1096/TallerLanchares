@@ -498,6 +498,43 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 /* ---------------------------------------------------------
+   Talleres en tarjetas con foto
+   --------------------------------------------------------- */
+
+.talleres {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(36px, 5vw, 64px) clamp(24px, 4vw, 56px);
+}
+.taller { display: grid; gap: 8px; text-align: center; justify-items: center; align-content: start; }
+.taller__marco {
+  width: 100%;
+  padding: clamp(14px, 2vw, 24px);
+  margin-bottom: 14px;
+  border-radius: 28px;
+  background: var(--terracota-banda);
+}
+.taller__marco img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 45%;
+  border-radius: 12px;
+}
+.taller__fecha {
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--terracota);
+}
+.taller__titulo { font-family: var(--display); font-weight: 400; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.2; }
+.taller__meta { font-size: 0.82rem; letter-spacing: 0.06em; color: var(--ink-soft); }
+.taller__desc { max-width: 44ch; font-size: 0.92rem; color: var(--ink-soft); margin-top: 4px; }
+.taller__imparte { font-size: 0.82rem; color: var(--ink); }
+.taller .btn { margin-top: 12px; }
+
+/* ---------------------------------------------------------
    Horario
    Una tabla de las seis franjas que existen de verdad, en vez
    de una rejilla por horas: así no hay dos horas y media
@@ -783,6 +820,7 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 @media (max-width: 860px) {
+  .talleres { grid-template-columns: 1fr; }
   .split, .split--text-right, .split--text-left { grid-template-columns: 1fr; }
   .perfil.split--text-right, .perfil.split--text-left { grid-template-columns: 1fr; }
   .perfil .figure { order: -1; max-width: 220px; }
