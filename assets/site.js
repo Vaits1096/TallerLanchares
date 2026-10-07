@@ -374,6 +374,20 @@
     ok.hidden = false;
   }
 
+  function fallo(detalle) {
+    if (ok) ok.hidden = true;
+    if (!error) return;
+    error.innerHTML = 'No hemos podido ' + detalle + '. Prueba a abrir esta p&#225;gina en Safari o Chrome, ' +
+      'o escr&#237;benos por WhatsApp al <a class="text-link" href="https://wa.me/' + TELEFONO_TALLER +
+      '" target="_blank" rel="noreferrer">660&nbsp;671&nbsp;394</a> y te ayudamos.';
+    error.hidden = false;
+  }
+
+  // Los navegadores internos de Instagram, Facebook, TikTok... no dejan compartir ni descargar archivos.
+  var enApp = /Instagram|FBAN|FBAV|FB_IAB|Messenger|TikTok|Line\/|Snapchat|Twitter/i.test(navigator.userAgent);
+  var aviso = document.getElementById('ins-app');
+  if (enApp && aviso) aviso.hidden = false;
+
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     if (error) error.hidden = true;
@@ -382,25 +396,40 @@
     var ficha = leerFicha();
     if (!ficha) return;
 
-    var boton = event.submitter;
-    var accion = boton && boton.getAttribute('data-accion') || 'compartir';
-
-    var blob = crearPdf(ficha);
-    var nombre = nombreArchivo(ficha);
-
-    if (accion === 'compartir' && navigator.canShare && typeof File === 'function') {
-      var archivo = new File([blob], nombre, { type: 'application/pdf' });
-      if (navigator.canShare({ files: [archivo] })) {
-        navigator.share({ files: [archivo], title: 'Ficha de inscripción' })
-          .catch(function (e) {
-            // Si la persona cierra el menú de compartir no es un error.
-            if (e && e.name !== 'AbortError') descargar(blob, nombre);
-          });
-        return;
-      }
+    var blob, nombre;
+    try {
+      blob = crearPdf(ficha);
+      nombre = nombreArchivo(ficha);
+    } catch (e) {
+      fallo('crear el PDF');
+      return;
     }
 
-    descargar(blob, nombre);
+    // El menú de compartir tiene que abrirse en el mismo gesto del toque, sin esperas.
+    if (navigator.canShare && typeof File === 'function') {
+      try {
+        var archivo = new File([blob], nombre, { type: 'application/pdf' });
+        if (navigator.canShare({ files: [archivo] })) {
+          navigator.share({ files: [archivo] }).then(function () {
+            avisoOk('Listo. Si no has llegado a enviar la ficha, vuelve a pulsar el bot&#243;n.');
+          }).catch(function (e) {
+            // Cerrar el menú de compartir no es un fallo.
+            if (e && e.name === 'AbortError') return;
+            try { descargar(blob, nombre); } catch (x) { fallo('compartir ni descargar el PDF'); return; }
+            avisoOk('No se ha podido abrir el men&#250; de compartir, as&#237; que se ha descargado la ficha (<strong>' + nombre + '</strong>). ' +
+              'Adj&#250;ntala en el chat del taller: <a class="text-link" href="https://wa.me/' + TELEFONO_TALLER + '" target="_blank" rel="noreferrer">abrir WhatsApp &#8599;</a>');
+          });
+          return;
+        }
+      } catch (e) { /* seguimos con la descarga */ }
+    }
+
+    try {
+      descargar(blob, nombre);
+    } catch (e) {
+      fallo('descargar el PDF');
+      return;
+    }
     avisoOk('Se ha descargado la ficha en PDF (<strong>' + nombre + '</strong>). ' +
       'Para enviárnosla, ábrela en WhatsApp y adjunta el archivo: ' +
       '<a class="text-link" href="https://wa.me/' + TELEFONO_TALLER + '" target="_blank" rel="noreferrer">abrir el chat del taller &#8599;</a>');
