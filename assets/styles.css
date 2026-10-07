@@ -440,6 +440,7 @@ ul, ol { padding: 0; list-style: none; }
   align-items: center;
 }
 .split--text-right { grid-template-columns: 0.9fr 1.1fr; }
+.split--solo { grid-template-columns: minmax(0, 1fr); }
 
 .card {
   display: flex;
