@@ -504,13 +504,15 @@ ul, ol { padding: 0; list-style: none; }
 .talleres {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(36px, 5vw, 56px) clamp(18px, 3vw, 40px);
+  gap: clamp(28px, 4vw, 40px) clamp(10px, 1.5vw, 18px);
+  max-width: 640px;
+  margin-inline: auto;
 }
 .taller { display: grid; gap: 6px; text-align: center; justify-items: center; align-content: start; }
 .taller__enlace { display: flex; justify-content: center; width: 100%; margin-bottom: 8px; }
 .taller__marco {
   display: block;
-  width: min(192px, 100%);
+  width: min(230px, 100%);
   padding: 12px;
   border-radius: 22px;
   background: var(--terracota-banda);
