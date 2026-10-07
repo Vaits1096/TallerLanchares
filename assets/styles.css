@@ -878,7 +878,7 @@ ul, ol { padding: 0; list-style: none; }
 .fila--inversa { grid-template-columns: 1fr minmax(0, 300px); }
 .fila .figure img { width: 100%; height: auto; border-radius: 6px; }
 .fila__texto { display: grid; gap: 10px; }
-.fila__texto .h3 { color: var(--terracota); }
+.fila__texto .h3 { color: #5b6a52; }
 .fila__texto p { color: var(--ink-soft); font-size: 0.95rem; max-width: 46ch; }
 .split--foto-chica .figure { max-width: 300px; justify-self: center; }
 
