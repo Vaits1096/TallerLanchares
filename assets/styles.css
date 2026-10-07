@@ -1229,6 +1229,13 @@ ul, ol { padding: 0; list-style: none; }
 .opcion--texto { align-items: flex-start; font-size: 0.85rem; line-height: 1.55; }
 .opcion--texto input { margin-top: 3px; flex: none; }
 
+[hidden] { display: none !important; }
+.formulario__error a { color: inherit; text-decoration: underline; font-weight: 500; }
+.campo.falta input, .campo.falta textarea, .campo.falta select { border-color: #8a3a24; }
+.campo.falta > label, .campo.falta legend { color: #8a3a24 !important; }
+.bloque.falta .bloque__titulo { color: #8a3a24; }
+.opcion.falta { border-color: #8a3a24; background: rgba(138, 58, 36, 0.07); }
+
 .formulario__ok {
   font-size: 0.85rem;
   color: #3f5a3a;

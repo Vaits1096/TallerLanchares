@@ -141,12 +141,45 @@
   var error = document.getElementById('ins-error');
   var ok = document.getElementById('ins-ok');
 
-  function mostrarError(texto, campo) {
+  function mostrarError(texto) {
     if (ok) ok.hidden = true;
     if (error) { error.textContent = texto; error.hidden = false; }
-    if (campo && campo.focus) campo.focus();
     return null;
   }
+
+  // Marca los campos que faltan y deja el aviso a la vista, junto al botón.
+  function limpiarMarcas() {
+    Array.prototype.forEach.call(form.querySelectorAll('.falta'), function (e) { e.classList.remove('falta'); });
+  }
+  form.addEventListener('input', limpiarMarcas);
+  form.addEventListener('change', limpiarMarcas);
+
+  function mostrarFaltas(faltan) {
+    limpiarMarcas();
+    if (ok) ok.hidden = true;
+    if (!error) return null;
+    var html = 'Falta por completar: ';
+    html += faltan.map(function (f) {
+      var el = document.getElementById(f.id);
+      if (el) (el.closest('.campo, .bloque, .opcion') || el).classList.add('falta');
+      return '<a href="#' + f.id + '" data-ir="' + f.id + '">' + f.texto + '</a>';
+    }).join(', ') + '.';
+    error.innerHTML = html;
+    error.hidden = false;
+    if (error.scrollIntoView) error.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    return null;
+  }
+
+  // Tocar un campo de la lista lleva hasta él.
+  if (error) error.addEventListener('click', function (event) {
+    var enlace = event.target.closest('a[data-ir]');
+    if (!enlace) return;
+    event.preventDefault();
+    var el = document.getElementById(enlace.getAttribute('data-ir'));
+    if (!el) return;
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (el.focus && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) el.focus({ preventScroll: true });
+  });
 
   function esMenor(iso) {
     var n = new Date(iso);
@@ -172,17 +205,19 @@
     );
     var menor = v('nacimiento') && esMenor(v('nacimiento'));
 
-    if (!v('nombre'))     return mostrarError('Nos falta el nombre.', form.nombre);
-    if (!v('apellidos'))  return mostrarError('Nos faltan los apellidos.', form.apellidos);
-    if (!v('nacimiento')) return mostrarError('Nos falta la fecha de nacimiento.', form.nacimiento);
-    if (!grupos.length)   return mostrarError('Elige al menos un grupo.');
-    if (menor && (!v('tutor') || !v('tutorTel'))) {
-      return mostrarError('Al ser menor, necesitamos el nombre y el teléfono de la madre, padre o tutor.', form.tutor);
-    }
     var pago = form.querySelector('input[name="pago"]:checked');
-    if (!pago) return mostrarError('Dinos cómo prefieres pagar.');
-    if (!form.normas.checked) return mostrarError('Para apuntarte tienes que aceptar las normas de funcionamiento.', form.normas);
-    if (!form.datos.checked)  return mostrarError('Necesitamos tu permiso para tratar los datos.', form.datos);
+
+    var faltan = [];
+    if (!v('nombre'))      faltan.push({ id: 'ins-nombre', texto: 'el nombre' });
+    if (!v('apellidos'))   faltan.push({ id: 'ins-apellidos', texto: 'los apellidos' });
+    if (!v('nacimiento'))  faltan.push({ id: 'ins-nacimiento', texto: 'la fecha de nacimiento' });
+    if (!grupos.length)    faltan.push({ id: 'bloque-grupos', texto: 'al menos un grupo' });
+    if (menor && !v('tutor'))    faltan.push({ id: 'ins-tutor', texto: 'el nombre de la madre, padre o tutor' });
+    if (menor && !v('tutorTel')) faltan.push({ id: 'ins-tutor-tel', texto: 'el tel\u00e9fono de la madre, padre o tutor' });
+    if (!pago)             faltan.push({ id: 'bloque-pago', texto: 'c\u00f3mo prefieres pagar' });
+    if (!form.normas.checked) faltan.push({ id: 'ins-normas', texto: 'aceptar las normas de funcionamiento' });
+    if (!form.datos.checked)  faltan.push({ id: 'ins-datos', texto: 'el permiso de tratamiento de datos' });
+    if (faltan.length) return mostrarFaltas(faltan);
 
     var familiar = form.querySelector('input[name="familiar"]:checked');
     var conocio = form.querySelector('input[name="conocio"]:checked');
@@ -392,6 +427,7 @@
     event.preventDefault();
     if (error) error.hidden = true;
     if (ok) ok.hidden = true;
+    limpiarMarcas();
 
     var ficha = leerFicha();
     if (!ficha) return;

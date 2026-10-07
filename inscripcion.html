@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=72" />
-<script src="assets/site.js?v=72" defer></script>
+<link rel="stylesheet" href="assets/styles.css?v=74" />
+<script src="assets/site.js?v=74" defer></script>
 </head>
 <body>
 
@@ -65,8 +65,8 @@
   <p class="eyebrow">Inscripci&#243;n</p>
   <h1 class="display h1">Ficha de <em>inscripci&#243;n</em></h1>
   <p class="lead">
-    Rellena la ficha y elige los horarios que te vengan bien. Al terminar se abre WhatsApp con
-    todo escrito: solo tienes que darle a enviar y te confirmamos la plaza.
+    Rellena la ficha y elige los horarios que te vengan bien. Al terminar se crea un PDF
+    con tus datos que puedes enviarnos por WhatsApp y te confirmamos la plaza.
   </p>
 </section>
 
@@ -74,7 +74,7 @@
   <div class="note" id="ins-app" hidden style="max-width:620px;margin:0 auto 28px">
     <strong>Est&#225;s en el navegador de una aplicaci&#243;n (Instagram, Facebook&#8230;).</strong>
     Desde aqu&#237; no se puede compartir el PDF. Abre esta p&#225;gina en Safari o Chrome
-    (men&#250; <em>&#183;&#183;&#183;</em> &#8594; &#171;Abrir en el navegador&#187;) y vuelve a enviar la ficha.
+    (en el men&#250; de los tres puntos, &#171;Abrir en el navegador&#187;) y vuelve a enviar la ficha.
   </div>
 
   <form class="formulario formulario--ficha" id="form-inscripcion" novalidate>
@@ -95,7 +95,7 @@
       </div>
     </fieldset>
 
-    <fieldset class="bloque">
+    <fieldset class="bloque" id="bloque-grupos">
       <legend class="bloque__titulo"><span>2</span> Qu&#233; grupo o grupos</legend>
       <p class="campo__ayuda">
         Toca el d&#237;a que te venga bien para ver sus horarios. Puedes elegir m&#225;s de uno.
@@ -247,12 +247,12 @@
         </div>
       </details>
       <label class="opcion opcion--texto">
-        <input type="checkbox" name="normas" required />
+        <input type="checkbox" id="ins-normas" name="normas" />
         <span>He le&#237;do y acepto las normas de funcionamiento: cuotas, pago, bajas, cambios de grupo y clases. *</span>
       </label>
     </fieldset>
 
-    <fieldset class="bloque">
+    <fieldset class="bloque" id="bloque-pago">
       <legend class="bloque__titulo"><span>7</span> C&#243;mo prefieres pagar</legend>
       <fieldset class="campo campo--opciones">
         <legend>Forma de pago</legend>
@@ -265,7 +265,7 @@
     <fieldset class="bloque">
       <legend class="bloque__titulo"><span>8</span> Permisos</legend>
       <label class="opcion opcion--texto">
-        <input type="checkbox" name="datos" required />
+        <input type="checkbox" id="ins-datos" name="datos" />
         <span><strong>Tratamiento de datos.</strong> Autorizo al taller a guardar estos datos con la &#250;nica finalidad de gestionar la inscripci&#243;n, las clases y los cobros. No se ceder&#225;n a terceros. Puedo pedir verlos, corregirlos o borrarlos cuando quiera. *</span>
       </label>
       <label class="opcion opcion--texto">
