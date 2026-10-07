@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=70" />
-<script src="assets/site.js?v=70" defer></script>
+<link rel="stylesheet" href="assets/styles.css?v=71" />
+<script src="assets/site.js?v=71" defer></script>
 </head>
 <body>
 
@@ -151,10 +151,6 @@
         <label for="ins-telefono">Tel&#233;fono <span class="campo__opcional">opcional si eres mayor de edad</span></label>
         <input type="tel" id="ins-telefono" name="telefono" autocomplete="tel" inputmode="tel" />
       </div>
-      <div class="campo">
-        <label for="ins-email">Email <span class="campo__opcional">opcional si eres mayor de edad</span></label>
-        <input type="email" id="ins-email" name="email" autocomplete="email" />
-      </div>
     </fieldset>
 
     <fieldset class="bloque" id="bloque-tutor">
@@ -171,10 +167,6 @@
       <div class="campo">
         <label for="ins-tutor-tel">Tel&#233;fono</label>
         <input type="tel" id="ins-tutor-tel" name="tutorTel" inputmode="tel" autocomplete="off" />
-      </div>
-      <div class="campo">
-        <label for="ins-tutor-email">Email</label>
-        <input type="email" id="ins-tutor-email" name="tutorEmail" autocomplete="off" />
       </div>
     </fieldset>
 
@@ -285,8 +277,6 @@
 
     <div class="formulario__pie">
       <button class="btn" type="submit" data-accion="compartir">Enviar ficha en PDF <span class="btn__arrow">&#8594;</span></button>
-      <button class="btn btn--ghost" type="submit" data-accion="descargar">Descargar ficha en PDF</button>
-      <button class="btn btn--ghost" type="submit" data-accion="texto">Enviar solo el texto por WhatsApp</button>
       <p class="formulario__error" id="ins-error" role="alert" hidden></p>
       <p class="formulario__ok" id="ins-ok" role="status" hidden></p>
     </div>

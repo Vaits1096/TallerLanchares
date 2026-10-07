@@ -123,12 +123,11 @@
   });
 })();
 
-/* --- Ficha de inscripción: PDF o mensaje de WhatsApp ----------------------
+/* --- Ficha de inscripción: PDF para compartir ------------------------------
    La web es estática, no hay servidor que reciba el formulario. Con los
-   datos se puede: (1) crear un PDF en el propio dispositivo y compartirlo
-   (en el móvil, el menú de compartir deja elegir WhatsApp) o descargarlo,
-   o (2) abrir WhatsApp con la ficha escrita como texto.
-   Nada se envía a ningún servidor. El PDF se genera aquí mismo, sin
+   datos se crea un PDF en el propio dispositivo y se comparte (en el móvil,
+   el menú de compartir deja elegir WhatsApp); si no se puede compartir, se
+   descarga. Nada se envía a ningún servidor. El PDF se genera aquí mismo, sin
    librerías externas. TELEFONO_TALLER: el de Raquel. */
 
 (function () {
@@ -197,13 +196,11 @@
     ];
     var contacto = [];
     if (v('telefono')) contacto.push('Teléfono: ' + v('telefono'));
-    if (v('email')) contacto.push('Email: ' + v('email'));
     if (contacto.length) secciones.push(['Cómo localizarle', contacto]);
     if (menor) {
       var t = ['Nombre: ' + v('tutor')];
       if (v('tutorDni')) t.push('DNI: ' + v('tutorDni'));
       t.push('Teléfono: ' + v('tutorTel'));
-      if (v('tutorEmail')) t.push('Email: ' + v('tutorEmail'));
       secciones.push(['Madre, padre o tutor legal', t]);
     }
     var otros = ['Forma de pago: ' + pago.value];
@@ -221,16 +218,6 @@
       nombre: v('nombre') + ' ' + v('apellidos'),
       secciones: secciones
     };
-  }
-
-  function mensajeTexto(ficha) {
-    var l = ['¡Hola! Quiero inscribirme en las clases.', ''];
-    ficha.secciones.forEach(function (s) {
-      l.push(s[0] + ':');
-      s[1].forEach(function (x) { l.push(x); });
-      l.push('');
-    });
-    return l.join('\n').replace(/\n+$/, '');
   }
 
   /* ---- Generador de PDF mínimo (texto, Helvetica, A4) ------------------ */
@@ -387,12 +374,6 @@
     ok.hidden = false;
   }
 
-  function abrirWhatsApp(texto) {
-    var url = 'https://wa.me/' + TELEFONO_TALLER + '?text=' + encodeURIComponent(texto);
-    var ventana = window.open(url, '_blank', 'noopener');
-    if (!ventana) window.location.href = url;
-  }
-
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     if (error) error.hidden = true;
@@ -403,11 +384,6 @@
 
     var boton = event.submitter;
     var accion = boton && boton.getAttribute('data-accion') || 'compartir';
-
-    if (accion === 'texto') {
-      abrirWhatsApp(mensajeTexto(ficha));
-      return;
-    }
 
     var blob = crearPdf(ficha);
     var nombre = nombreArchivo(ficha);
