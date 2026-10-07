@@ -547,6 +547,17 @@ ul, ol { padding: 0; list-style: none; }
 .taller__mas { margin-top: 6px; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
 .taller__mas:hover { color: var(--terracota); border-color: var(--terracota); }
 
+/* Próximos talleres en la portada */
+.proximos { display: grid; justify-items: center; gap: 22px; margin-top: clamp(14px, 2vw, 26px); width: 100%; }
+.proximos__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px clamp(12px, 3vw, 36px);
+  width: 100%;
+  max-width: 560px;
+}
+.proximos .taller__marco { width: min(150px, 100%); }
+
 /* Página de un taller */
 .detalle {
   display: grid;
