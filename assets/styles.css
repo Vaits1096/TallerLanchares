@@ -1219,6 +1219,15 @@ ul, ol { padding: 0; list-style: none; }
 .opcion--texto { align-items: flex-start; font-size: 0.85rem; line-height: 1.55; }
 .opcion--texto input { margin-top: 3px; flex: none; }
 
+.formulario__ok {
+  font-size: 0.85rem;
+  color: #3f5a3a;
+  padding: 10px 14px;
+  border-left: 2px solid #5b6a52;
+  background: rgba(91, 106, 82, 0.1);
+  width: 100%;
+}
+
 /* Línea corta bajo los botones de la portada */
 .hero__nota {
   margin-top: 4px;

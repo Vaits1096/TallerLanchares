@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=67" />
-<script src="assets/site.js?v=67" defer></script>
+<link rel="stylesheet" href="assets/styles.css?v=68" />
+<script src="assets/site.js?v=68" defer></script>
 </head>
 <body>
 
@@ -277,18 +277,23 @@
     </fieldset>
 
     <p class="formulario__aviso">
-      Al enviar se abre WhatsApp con estos datos escritos. No se guardan en esta web ni se
-      env&#237;an a ning&#250;n otro sitio. No nos mandes n&#250;meros de cuenta por aqu&#237;.
+      La ficha se crea en tu propio dispositivo, no se guarda en esta web ni se env&#237;a a ning&#250;n
+      otro sitio. Con &#171;Enviar ficha en PDF&#187; se abre el men&#250; de compartir (elige WhatsApp);
+      si tu dispositivo no lo permite, el PDF se descarga y puedes adjuntarlo en el chat.
+      No nos mandes n&#250;meros de cuenta por aqu&#237;.
     </p>
 
     <div class="formulario__pie">
-      <button class="btn" type="submit">Enviar ficha por WhatsApp <span class="btn__arrow">&#8594;</span></button>
+      <button class="btn" type="submit" data-accion="compartir">Enviar ficha en PDF <span class="btn__arrow">&#8594;</span></button>
+      <button class="btn btn--ghost" type="submit" data-accion="descargar">Descargar ficha en PDF</button>
+      <button class="btn btn--ghost" type="submit" data-accion="texto">Enviar solo el texto por WhatsApp</button>
       <p class="formulario__error" id="ins-error" role="alert" hidden></p>
+      <p class="formulario__ok" id="ins-ok" role="status" hidden></p>
     </div>
 
     <noscript>
       <p class="note">
-        El formulario necesita JavaScript para abrir WhatsApp. Puedes escribirnos
+        El formulario necesita JavaScript para crear el PDF. Puedes escribirnos
         directamente al <a class="text-link" href="https://wa.me/34660671394" target="_blank" rel="noreferrer">660&nbsp;671&nbsp;394</a>.
       </p>
     </noscript>
