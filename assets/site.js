@@ -177,8 +177,6 @@
     if (!v('apellidos'))  return mostrarError('Nos faltan los apellidos.', form.apellidos);
     if (!v('nacimiento')) return mostrarError('Nos falta la fecha de nacimiento.', form.nacimiento);
     if (!grupos.length)   return mostrarError('Elige al menos un grupo.');
-    if (!v('telefono'))   return mostrarError('Nos falta un teléfono.', form.telefono);
-    if (!v('email'))      return mostrarError('Nos falta un email.', form.email);
     if (menor && (!v('tutor') || !v('tutorTel'))) {
       return mostrarError('Al ser menor, necesitamos el nombre y el teléfono de la madre, padre o tutor.', form.tutor);
     }
@@ -196,8 +194,11 @@
         'Fecha de nacimiento: ' + fechaLegible(v('nacimiento'))
       ]],
       ['Grupos', grupos.map(function (g) { return '- ' + g; })],
-      ['Cómo localizarle', ['Teléfono: ' + v('telefono'), 'Email: ' + v('email')]]
     ];
+    var contacto = [];
+    if (v('telefono')) contacto.push('Teléfono: ' + v('telefono'));
+    if (v('email')) contacto.push('Email: ' + v('email'));
+    if (contacto.length) secciones.push(['Cómo localizarle', contacto]);
     if (menor) {
       var t = ['Nombre: ' + v('tutor')];
       if (v('tutorDni')) t.push('DNI: ' + v('tutorDni'));
