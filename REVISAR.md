@@ -83,7 +83,7 @@ Lo único que queda por aclarar aquí:
 - Si la primera clase de prueba es gratis. Ojo con esto: en las preguntas frecuentes pone
   que sí, pero eso me lo inventé yo, y si además cobráis clases sueltas hay que dejar claro
   qué se paga y qué no.
-- Si el curso va de septiembre a junio.
+- Si el curso va de octubre a junio.
 - Qué material está incluido en la cuota y cuál no.
 - Si hay intensivos en julio.
 
