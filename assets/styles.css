@@ -503,16 +503,16 @@ ul, ol { padding: 0; list-style: none; }
 
 .talleres {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: clamp(32px, 4vw, 48px) clamp(18px, 2.5vw, 32px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(36px, 5vw, 56px) clamp(18px, 3vw, 40px);
 }
 .taller { display: grid; gap: 6px; text-align: center; justify-items: center; align-content: start; }
-.taller__enlace { display: block; margin-bottom: 8px; }
+.taller__enlace { display: flex; justify-content: center; width: 100%; margin-bottom: 8px; }
 .taller__marco {
   display: block;
-  width: 96px;
-  padding: 7px;
-  border-radius: 16px;
+  width: min(192px, 100%);
+  padding: 12px;
+  border-radius: 22px;
   background: var(--terracota-banda);
   transition: transform 200ms ease;
 }
@@ -524,7 +524,7 @@ ul, ol { padding: 0; list-style: none; }
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center 45%;
-  border-radius: 9px;
+  border-radius: 12px;
 }
 .taller__fecha {
   font-size: 0.58rem;
