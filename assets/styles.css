@@ -613,6 +613,45 @@ ul, ol { padding: 0; list-style: none; }
 .detalle__subtitulo { font-family: var(--display); font-weight: 400; font-size: 1.25rem; }
 
 /* ---------------------------------------------------------
+   Disposición editorial: líneas finas, celdas y mucho aire
+   (página El taller)
+   --------------------------------------------------------- */
+
+.ed-franja, .ed-centro, .ed-fila, .ed-galeria { border-top: 1px solid var(--line); }
+.ed-fila--ultima { border-bottom: 1px solid var(--line); }
+
+.ed-label {
+  font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--terracota);
+}
+.ed-titulo {
+  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem); letter-spacing: 0.12em; line-height: 1.3;
+  color: var(--ink);
+}
+
+.ed-franja { display: grid; justify-items: center; gap: 18px; padding: clamp(28px, 4vw, 44px) var(--pad); text-align: center; }
+.ed-lista {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px clamp(28px, 6vw, 80px);
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+.ed-centro { display: grid; justify-items: center; gap: 18px; padding: clamp(60px, 9vw, 120px) var(--pad); text-align: center; }
+.ed-centro__texto { max-width: 62ch; font-size: 0.98rem; color: var(--ink-soft); }
+
+.ed-fila { display: grid; grid-template-columns: 1fr 1fr; }
+.ed-cel { margin: 0; padding: clamp(24px, 4vw, 56px); min-width: 0; }
+.ed-fila > .ed-cel:first-child, .ed-galeria > .ed-cel:not(:last-child) { border-right: 1px solid var(--line); }
+.ed-cel--foto img { display: block; width: 100%; max-width: 420px; margin-inline: auto; height: auto; }
+.ed-cel--texto { display: grid; align-content: start; gap: 14px; padding-top: clamp(36px, 5vw, 72px); }
+.ed-cel--texto p:not(.ed-label) { color: var(--ink-soft); font-size: 0.95rem; max-width: 52ch; }
+.ed-cel--texto p:not(.ed-label) + p { margin-top: 2px; }
+
+.ed-galeria { display: grid; grid-template-columns: repeat(3, 1fr); }
+.ed-galeria .ed-cel img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+
+/* ---------------------------------------------------------
    Horario
    Una tabla de las seis franjas que existen de verdad, en vez
    de una rejilla por horas: así no hay dos horas y media
@@ -936,6 +975,10 @@ ul, ol { padding: 0; list-style: none; }
 @media (max-width: 860px) {
   .talleres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fila, .fila--inversa { grid-template-columns: 1fr; }
+  .ed-fila, .ed-galeria { grid-template-columns: 1fr; }
+  .ed-fila > .ed-cel:first-child, .ed-galeria > .ed-cel:not(:last-child) { border-right: 0; border-bottom: 1px solid var(--line); }
+  .ed-fila--inversa > .ed-cel--foto { order: -1; }
+  .ed-fila--inversa > .ed-cel--texto { border-top: 1px solid var(--line); }
   .fila .figure { max-width: 260px; }
   .fila--inversa .figure { order: -1; }
   .detalle { grid-template-columns: 1fr; }
