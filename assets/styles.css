@@ -503,15 +503,15 @@ ul, ol { padding: 0; list-style: none; }
 
 .talleres {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(36px, 5vw, 64px) clamp(24px, 4vw, 56px);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: clamp(32px, 4vw, 48px) clamp(18px, 2.5vw, 32px);
 }
 .taller { display: grid; gap: 8px; text-align: center; justify-items: center; align-content: start; }
 .taller__marco {
   width: 100%;
-  padding: clamp(14px, 2vw, 24px);
-  margin-bottom: 14px;
-  border-radius: 28px;
+  padding: clamp(10px, 1.2vw, 14px);
+  margin-bottom: 10px;
+  border-radius: 20px;
   background: var(--terracota-banda);
 }
 .taller__marco img {
@@ -820,7 +820,7 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 @media (max-width: 860px) {
-  .talleres { grid-template-columns: 1fr; }
+  .talleres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .split, .split--text-right, .split--text-left { grid-template-columns: 1fr; }
   .perfil.split--text-right, .perfil.split--text-left { grid-template-columns: 1fr; }
   .perfil .figure { order: -1; max-width: 220px; }
