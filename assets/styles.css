@@ -503,36 +503,75 @@ ul, ol { padding: 0; list-style: none; }
 
 .talleres {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: clamp(32px, 4vw, 48px) clamp(18px, 2.5vw, 32px);
 }
-.taller { display: grid; gap: 8px; text-align: center; justify-items: center; align-content: start; }
+.taller { display: grid; gap: 6px; text-align: center; justify-items: center; align-content: start; }
+.taller__enlace { display: block; margin-bottom: 8px; }
 .taller__marco {
-  width: 100%;
-  padding: clamp(10px, 1.2vw, 14px);
-  margin-bottom: 10px;
-  border-radius: 20px;
+  display: block;
+  width: 96px;
+  padding: 7px;
+  border-radius: 16px;
   background: var(--terracota-banda);
+  transition: transform 200ms ease;
 }
+.taller__enlace:hover .taller__marco,
+.taller__enlace:focus-visible .taller__marco { transform: translateY(-3px); }
 .taller__marco img {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center 45%;
-  border-radius: 12px;
+  border-radius: 9px;
 }
 .taller__fecha {
-  font-size: 0.62rem;
-  letter-spacing: 0.26em;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--terracota);
 }
-.taller__titulo { font-family: var(--display); font-weight: 400; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.2; }
-.taller__meta { font-size: 0.82rem; letter-spacing: 0.06em; color: var(--ink-soft); }
-.taller__desc { max-width: 44ch; font-size: 0.92rem; color: var(--ink-soft); margin-top: 4px; }
-.taller__imparte { font-size: 0.82rem; color: var(--ink); }
-.taller .btn { margin-top: 12px; }
+.taller__titulo { font-family: var(--display); font-weight: 400; font-size: clamp(1.1rem, 1.8vw, 1.3rem); line-height: 1.2; }
+.taller__titulo a { text-decoration: none; }
+.taller__titulo a:hover { color: var(--terracota); }
+.taller__meta { font-size: 0.78rem; letter-spacing: 0.05em; color: var(--ink-soft); }
+.taller__mas { margin-top: 6px; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+.taller__mas:hover { color: var(--terracota); border-color: var(--terracota); }
+
+/* Página de un taller */
+.detalle {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: center;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+.detalle__foto { margin: 0; }
+.detalle__foto img { display: block; width: 100%; max-width: 460px; height: auto; border-radius: 6px; }
+.detalle__texto { display: grid; gap: 16px; }
+.detalle__volver {
+  justify-self: start;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-soft); border-bottom: 1px solid var(--line); padding-bottom: 3px;
+}
+.detalle__volver:hover { color: var(--terracota); border-color: var(--terracota); }
+.detalle__intro { font-weight: 500; color: var(--ink); }
+.detalle__desc { color: var(--ink-soft); font-size: 0.95rem; max-width: 62ch; }
+.detalle__datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px 28px;
+  margin: 6px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-soft);
+}
+.detalle__datos dt { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terracota); margin-bottom: 4px; }
+.detalle__datos dd { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+.detalle__reserva { display: grid; gap: 10px; justify-items: start; padding-top: 18px; border-top: 1px solid var(--line-soft); }
+.detalle__reserva p { font-size: 0.9rem; color: var(--ink-soft); }
+.detalle__subtitulo { font-family: var(--display); font-weight: 400; font-size: 1.25rem; }
 
 /* ---------------------------------------------------------
    Horario
@@ -821,6 +860,8 @@ ul, ol { padding: 0; list-style: none; }
 
 @media (max-width: 860px) {
   .talleres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detalle { grid-template-columns: 1fr; }
+  .detalle__foto img { max-width: 320px; }
   .split, .split--text-right, .split--text-left { grid-template-columns: 1fr; }
   .perfil.split--text-right, .perfil.split--text-left { grid-template-columns: 1fr; }
   .perfil .figure { order: -1; max-width: 220px; }
