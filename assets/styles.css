@@ -473,6 +473,9 @@ ul, ol { padding: 0; list-style: none; }
 
 .figure { margin: 0; display: grid; gap: 12px; }
 .figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.figure--natural img { aspect-ratio: auto; height: auto; }
+.split--text-left { grid-template-columns: 1.1fr 0.9fr; }
+.perfiles { display: grid; gap: clamp(56px, 8vw, 104px); }
 .figure--wide img { aspect-ratio: 16 / 11; }
 .figure figcaption {
   font-size: 0.58rem;
@@ -767,7 +770,8 @@ ul, ol { padding: 0; list-style: none; }
 }
 
 @media (max-width: 860px) {
-  .split, .split--text-right { grid-template-columns: 1fr; }
+  .split, .split--text-right, .split--text-left { grid-template-columns: 1fr; }
+  .perfil .figure { order: -1; }
   .tabla-marco { display: none; }
   .week { display: block; }
   .workshop { grid-template-columns: 72px 1fr; }
