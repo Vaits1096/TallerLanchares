@@ -1257,6 +1257,10 @@ ul, ol { padding: 0; list-style: none; }
   text-transform: uppercase;
 }
 
+.hero__notas { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px; }
+.hero__notas .hero__nota { margin-top: 0; }
+.hero__nota--anos { background: transparent; border: 1px solid var(--terracota); }
+
 /* Cada teléfono de contacto lleva su acceso directo a WhatsApp al lado */
 .contact-item dd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
 .contact-item__wa {
