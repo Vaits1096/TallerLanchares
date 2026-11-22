@@ -1544,3 +1544,8 @@ ul, ol { padding: 0; list-style: none; }
 
 .tarjeta__marco { position: relative; display: grid; width: 100%; justify-items: center; }
 
+
+/* Talleres ya realizados: en blanco y negro, con su sello */
+.realizados__titulo { margin-top: clamp(56px, 8vw, 88px); margin-bottom: clamp(20px, 3vw, 32px); }
+.taller--realizado { filter: grayscale(1); }
+.taller--realizado .taller__marco img { opacity: 0.85; }
